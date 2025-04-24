@@ -12,3 +12,4 @@ db.properties
 .vscode/
 .idea/
 *.iml
+demo.war
