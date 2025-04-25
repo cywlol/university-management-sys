@@ -1,1 +1,1 @@
-SHOW DATABASES;
+SELECT * FROM `student`;

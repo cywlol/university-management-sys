@@ -10,8 +10,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-@WebServlet("/register")  // ← this connects /login to this class!
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/student/register")  // ← this connects /login to this class!
+public class StudentRegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
