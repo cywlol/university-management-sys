@@ -16,10 +16,14 @@ public class DBConnection {
             }
 
             props.load(input);
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
             String url = props.getProperty("db.url");
             String user = props.getProperty("db.user");
             String pass = props.getProperty("db.password");
+
+            System.out.println("url: " + url);
+            System.out.println("user: " + user);
 
             return DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {
@@ -31,7 +35,7 @@ public class DBConnection {
     public static void main(String[] args) {
         try {
             Connection conn = getConnection();
-            System.out.println("✅ Connected to database successfully!");
+            System.out.println("Connected to database successfully!");
             conn.close();
         } catch (SQLException e) {
             System.out.println("❌ Database connection failed.");
