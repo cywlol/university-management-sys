@@ -13,3 +13,4 @@ db.properties
 .idea/
 *.iml
 demo.war
+.sql

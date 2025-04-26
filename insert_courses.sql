@@ -1,0 +1,16 @@
+INSERT INTO course (id, name, start_time, size, prerequisite, professor_id) VALUES
+('CSE101', 'Intro to Computer Science', '09:00 AM', 50, NULL, 1),
+('CSE102', 'Data Structures', '10:30 AM', 40, 'CSE101', 1),
+('CSE201', 'Algorithms', '12:00 PM', 35, 'CSE102', 2),
+('CSE202', 'Operating Systems', '02:00 PM', 30, 'CSE102', 2),
+('CSE203', 'Databases', '03:30 PM', 45, 'CSE102', 3),
+('MATH101', 'Calculus I', '08:00 AM', 60, NULL, 4),
+('MATH102', 'Calculus II', '09:30 AM', 55, 'MATH101', 4),
+('MATH201', 'Linear Algebra', '11:00 AM', 40, 'MATH102', 5),
+('PHY101', 'Physics I', '08:30 AM', 50, NULL, 6),
+('PHY102', 'Physics II', '10:00 AM', 45, 'PHY101', 6),
+('ENG101', 'English Composition', '01:00 PM', 70, NULL, 7),
+('ENG201', 'Advanced Writing', '02:30 PM', 50, 'ENG101', 7),
+('HIST101', 'World History', '11:30 AM', 60, NULL, 8),
+('ECON101', 'Microeconomics', '01:30 PM', 50, NULL, 9),
+('ECON102', 'Macroeconomics', '03:00 PM', 45, 'ECON101', 9);

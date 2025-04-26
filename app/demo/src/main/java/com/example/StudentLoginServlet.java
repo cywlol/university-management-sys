@@ -9,7 +9,9 @@ import jakarta.servlet.annotation.WebServlet;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 @WebServlet("/student/login")  // ← this connects /login to this class!
 public class StudentLoginServlet extends HttpServlet {
@@ -29,9 +31,18 @@ public class StudentLoginServlet extends HttpServlet {
             stmt.setString(2, password); 
             ResultSet rs = stmt.executeQuery();
 
+            
+
             if (rs.next()) {
-                PrintWriter out = res.getWriter();
-                out.println("<h3 style='color:blue;'>Successful login</h3>");
+                // ✅ Redirect to dashboard if login is successful
+                HttpSession session = req.getSession(); // Create new session
+                session.setAttribute("student_id", rs.getInt("id")); // store id
+                session.setAttribute("student_name", rs.getString("name"));  // store name
+                session.setAttribute("student_year", rs.getInt("year"));     // store year
+                session.setAttribute("student_gpa", rs.getDouble("gpa"));    // store GPA
+                session.setAttribute("courses", new ArrayList<Course>()); // store courses
+                
+                res.sendRedirect(req.getContextPath() + "/student/dashboard"); 
             } else {
                 res.setContentType("text/html");
                 PrintWriter out = res.getWriter();
