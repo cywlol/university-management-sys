@@ -28,6 +28,8 @@ public class StudentDashboardServlet extends HttpServlet {
         int studentId = (int) session.getAttribute("student_id");
 
         try {
+
+            // Select all the courses that the student is enrolled in
             Connection conn = DBConnection.getConnection();
             String sql = "SELECT c.id, c.size, c.start_time, c.name, c.prerequisite, c.professor_id " +
                          "FROM course c " +
@@ -37,13 +39,6 @@ public class StudentDashboardServlet extends HttpServlet {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, studentId);
             ResultSet rs = stmt.executeQuery();
-
-
-            String sql2 = "SELECT * FROM course";        
-            PreparedStatement stmt2 = conn.prepareStatement(sql2);
-            ResultSet rs2 = stmt2.executeQuery();
-
-            
 
             List<Course> courses = new ArrayList<>();
             while (rs.next()) {
@@ -57,6 +52,16 @@ public class StudentDashboardServlet extends HttpServlet {
                 courses.add(c);
             }
 
+            System.out.println("Courses" + courses);
+            
+            session.setAttribute("courses", courses);
+
+            // Select all the courses that are available for the student to enroll in
+            String sql2 = "SELECT * FROM course WHERE id NOT IN (SELECT course_id  FROM enrollment WHERE student_id = ?)";
+            PreparedStatement stmt2 = conn.prepareStatement(sql2);
+            stmt2.setInt(1, studentId);
+            ResultSet rs2 = stmt2.executeQuery();
+
             ArrayList<Course> allCourses = new ArrayList<>();
                 while (rs2.next()) {
                     Course c = new Course();
@@ -69,7 +74,7 @@ public class StudentDashboardServlet extends HttpServlet {
                     allCourses.add(c);
                 }
 
-            session.setAttribute("allCourses", allCourses);  // NEW line
+            session.setAttribute("allCourses", allCourses);  
             session.setAttribute("courses", courses);
             req.getRequestDispatcher("/student/dashboard.jsp").forward(req, res);
             conn.close();

@@ -1,8 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.Course" %>
 <%
-List<Course> courses = (List<Course>) req.getAttribute("courses");
-List<Course> allCourses = (List<Course>) req.getAttribute("allCourses"); // NEW line
+List<Course> courses = (List<Course>) session.getAttribute("courses");
+List<Course> allCourses = (List<Course>) session.getAttribute("allCourses"); // NEW line
 %>
 
     <!DOCTYPE html>

@@ -75,9 +75,6 @@ public class StudentEnrollmentServlet extends HttpServlet {
                 }                
                 
                 currentCourses.add(c);
-                ArrayList<Course> allCourses = (ArrayList<Course>) session.getAttribute("allCourses");
-                allCourses.remove(c);
-                session.setAttribute("allCourses", allCourses);
                 session.setAttribute("courses", currentCourses);
                 res.sendRedirect(req.getContextPath() + "/student/dashboard");
             }
