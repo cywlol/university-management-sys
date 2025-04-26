@@ -13,31 +13,28 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/student/dashboard")
-public class StudentDashboardServlet extends HttpServlet {
+@WebServlet("/professor/dashboard")
+public class ProfessorDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
         HttpSession session = req.getSession(false);
 
-        if (session == null || session.getAttribute("student_id") == null) {
+        if (session == null || session.getAttribute("professor_id") == null) {
             res.sendRedirect("../login.html");
             return;
         }
 
-        int studentId = (int) session.getAttribute("student_id");
+        int professor = (int) session.getAttribute("professor_id");
 
         try {
 
             // Select all the courses that the student is enrolled in
             Connection conn = DBConnection.getConnection();
-            String sql = "SELECT c.id, c.size, c.start_time, c.name, c.prerequisite, c.professor_id, e.grade " +
-                         "FROM course c " +
-                         "JOIN enrollment e ON c.id = e.course_id " +  
-                         "WHERE e.student_id = ?";
+            String sql = "SELECT * FROM course WHERE professor_id = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, studentId);
+            stmt.setInt(1, professor);
             ResultSet rs = stmt.executeQuery();
 
             List<Course> courses = new ArrayList<>();
@@ -49,7 +46,6 @@ public class StudentDashboardServlet extends HttpServlet {
                 c.setName(rs.getString("name"));
                 c.setPrerequisite(rs.getString("prerequisite"));
                 c.setProfessorId(rs.getInt("professor_id"));
-                c.setGrade(rs.getString("grade")); 
                 courses.add(c);
             }
 
@@ -57,26 +53,9 @@ public class StudentDashboardServlet extends HttpServlet {
             
             session.setAttribute("studentCourses", courses);
 
-            // Select all the courses that are available for the student to enroll in
-            String sql2 = "SELECT * FROM course WHERE id NOT IN (SELECT course_id  FROM enrollment WHERE student_id = ?)";
-            PreparedStatement stmt2 = conn.prepareStatement(sql2);
-            stmt2.setInt(1, studentId);
-            ResultSet rs2 = stmt2.executeQuery();
-
-            ArrayList<Course> allCourses = new ArrayList<>();
-                while (rs2.next()) {
-                    Course c = new Course();
-                    c.setId(rs2.getString("id"));
-                    c.setSize(rs2.getInt("size"));
-                    c.setStartTime(rs2.getString("start_time"));
-                    c.setName(rs2.getString("name"));
-                    c.setPrerequisite(rs2.getString("prerequisite"));
-                    c.setProfessorId(rs2.getInt("professor_id"));
-                    allCourses.add(c);
-                }
-
-            session.setAttribute("allCourses", allCourses);  
-            req.getRequestDispatcher("/student/dashboard.jsp").forward(req, res);
+            
+            session.setAttribute("professorCourses", courses);
+            req.getRequestDispatcher("/professor/dashboard.jsp").forward(req, res);
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();

@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/professor/login")  // ← this connects /login to this class!
 public class ProfessorLoginServlet extends HttpServlet {
@@ -30,8 +31,11 @@ public class ProfessorLoginServlet extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                PrintWriter out = res.getWriter();
-                out.println("<h3 style='color:blue;'>Successful login</h3>");
+                HttpSession session = req.getSession(); // Create new session
+                session.setAttribute("professor_id", rs.getInt("id")); // store id
+                session.setAttribute("professor_name", rs.getString("name"));  // store name
+                session.setAttribute("professor_email", rs.getString("email"));     // store year
+                res.sendRedirect(req.getContextPath() + "/professor/dashboard"); 
             } else {
                 res.setContentType("text/html");
                 PrintWriter out = res.getWriter();

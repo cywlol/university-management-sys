@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.Course" %>
 <%
-List<Course> courses = (List<Course>) session.getAttribute("courses");
+List<Course> courses = (List<Course>) session.getAttribute("studentCourses");
 List<Course> allCourses = (List<Course>) session.getAttribute("allCourses"); // NEW line
 %>
 
@@ -69,6 +69,8 @@ List<Course> allCourses = (List<Course>) session.getAttribute("allCourses"); // 
                 <th>Size</th>
                 <th>Prerequisite</th>
                 <th>Professor ID</th>
+                <th>Grade</th> 
+ 
               </tr>
             </thead>
             <tbody>
@@ -81,13 +83,16 @@ List<Course> allCourses = (List<Course>) session.getAttribute("allCourses"); // 
                 <td><%= c.getSize() %></td>
                 <td><%= c.getPrerequisite() %></td>
                 <td><%= c.getProfessorId() %></td>
+                <td><%= c.getGrade() != null ? c.getGrade() : "In Progress" %></td> <!-- NEW -->
               </tr>
               <% } } else { %>
               <tr>
                 <td colspan="6">You are not enrolled in any courses yet.</td>
               </tr>
               <% } %>
+              
             </tbody>
+            
           </table>
         </main>
         <h2 class="title">Enroll in a New Course</h2>

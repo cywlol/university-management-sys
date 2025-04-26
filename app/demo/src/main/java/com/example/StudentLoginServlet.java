@@ -40,7 +40,6 @@ public class StudentLoginServlet extends HttpServlet {
                 session.setAttribute("student_name", rs.getString("name"));  // store name
                 session.setAttribute("student_year", rs.getInt("year"));     // store year
                 session.setAttribute("student_gpa", rs.getDouble("gpa"));    // store GPA
-                session.setAttribute("courses", new ArrayList<Course>()); // store courses
                 
                 res.sendRedirect(req.getContextPath() + "/student/dashboard"); 
             } else {

@@ -64,7 +64,7 @@ public class StudentEnrollmentServlet extends HttpServlet {
 
 
             if (rowsInserted > 0) {
-                Object obj = session.getAttribute("courses");
+                Object obj = session.getAttribute("studentCourses");
         
                 ArrayList<Course> currentCourses;
                 
@@ -75,7 +75,7 @@ public class StudentEnrollmentServlet extends HttpServlet {
                 }                
                 
                 currentCourses.add(c);
-                session.setAttribute("courses", currentCourses);
+                session.setAttribute("studentCourses", currentCourses);
                 res.sendRedirect(req.getContextPath() + "/student/dashboard");
             }
             conn.close();

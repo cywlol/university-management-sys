@@ -7,8 +7,16 @@ public class Course {
     private String name;
     private String prerequisite;
     private int professorId;
+    private String grade;
 
     // Getters and Setters
+    public String getGrade() {
+        return grade;
+    }
+    
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
 
     public String getId() {
         return id;
