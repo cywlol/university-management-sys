@@ -3,6 +3,7 @@
 <%
 List<Course> courses = (List<Course>) session.getAttribute("studentCourses");
 List<Course> allCourses = (List<Course>) session.getAttribute("allCourses"); // NEW line
+String studentName = (String) session.getAttribute("student_name");
 %>
 
     <!DOCTYPE html>
@@ -53,10 +54,23 @@ List<Course> allCourses = (List<Course>) session.getAttribute("allCourses"); // 
         </style>
       </head>
       <body>
-        <header>
-          <h1>Welcome to Your Dashboard</h1>
-        </header>
-
+        <header style="position: relative;">
+    <h1 style="margin: 0;">Welcome, <%= studentName %>!</h1>
+    <form action="<%= request.getContextPath() %>/logout" method="post" 
+          style="position: absolute; top: 20px; right: 20px;">
+        <button type="submit" style="
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;">
+            Logout
+        </button>
+    </form>
+</header>
         <main>
           <h2 class="title">Your Enrolled Courses</h2>
 
@@ -70,7 +84,7 @@ List<Course> allCourses = (List<Course>) session.getAttribute("allCourses"); // 
                 <th>Prerequisite</th>
                 <th>Professor ID</th>
                 <th>Grade</th> 
- 
+                <th>Unenroll</th>
               </tr>
             </thead>
             <tbody>
@@ -84,7 +98,14 @@ List<Course> allCourses = (List<Course>) session.getAttribute("allCourses"); // 
                 <td><%= c.getPrerequisite() %></td>
                 <td><%= c.getProfessorId() %></td>
                 <td><%= c.getGrade() != null ? c.getGrade() : "In Progress" %></td> <!-- NEW -->
+                <td>
+                <form action="<%= request.getContextPath() %>/student/unenroll" method="post">
+                    <input type="hidden" name="courseId" value="<%= c.getId() %>" />
+                    <button type="submit" style="background-color: red; color: white;">Unenroll</button>
+                </form>
+            </td>
               </tr>
+              
               <% } } else { %>
               <tr>
                 <td colspan="6">You are not enrolled in any courses yet.</td>

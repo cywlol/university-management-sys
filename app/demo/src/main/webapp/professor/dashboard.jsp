@@ -48,9 +48,23 @@ String professorName = (String) session.getAttribute("professor_name");
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome, <%= professorName %>!</h1>
-    </header>
+    <header style="position: relative;">
+    <h1 style="margin: 0;">Welcome, <%= professorName %>!</h1>
+    <form action="<%= request.getContextPath() %>/logout" method="post" 
+          style="position: absolute; top: 20px; right: 20px;">
+        <button type="submit" style="
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;">
+            Logout
+        </button>
+    </form>
+</header>
 
     <main>
         <h2>Your Courses</h2>
