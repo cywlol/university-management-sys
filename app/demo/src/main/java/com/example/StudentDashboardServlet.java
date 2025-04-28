@@ -31,10 +31,11 @@ public class StudentDashboardServlet extends HttpServlet {
 
             // Select all the courses that the student is enrolled in
             Connection conn = DBConnection.getConnection();
-            String sql = "SELECT c.id, c.size, c.start_time, c.name, c.prerequisite, c.professor_id, e.grade " +
-                         "FROM course c " +
-                         "JOIN enrollment e ON c.id = e.course_id " +  
-                         "WHERE e.student_id = ?";
+            String sql = "SELECT c.id, c.size, c.start_time, c.name, c.prerequisite, c.professor_id, e.grade, p.name AS professor_name " +
+             "FROM course c " +
+             "JOIN enrollment e ON c.id = e.course_id " +
+             "JOIN professor p ON c.professor_id = p.id " +
+             "WHERE e.student_id = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, studentId);
@@ -50,6 +51,7 @@ public class StudentDashboardServlet extends HttpServlet {
                 c.setPrerequisite(rs.getString("prerequisite"));
                 c.setProfessorId(rs.getInt("professor_id"));
                 c.setGrade(rs.getString("grade")); 
+                c.setProfessorName(rs.getString("professor_name")); // ← add this line
                 courses.add(c);
             }
 

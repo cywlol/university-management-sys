@@ -8,6 +8,7 @@ public class Course {
     private String prerequisite;
     private int professorId;
     private String grade;
+    private String professorName;
 
     // Getters and Setters
     public String getGrade() {
@@ -65,4 +66,12 @@ public class Course {
     public void setProfessorId(int professorId) {
         this.professorId = professorId;
     }
+
+    public String getProfessorName() {
+        return professorName;
+    }
+
+    public void setProfessorName(String professorName) {
+        this.professorName = professorName;
+    }   
 }
