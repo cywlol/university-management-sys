@@ -229,10 +229,6 @@ List<Professor> professors = (List<Professor>) request.getAttribute("professors"
                         <input type="number" id="size" name="size" class="form-control" placeholder="e.g. 30" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="prerequisite">Prerequisite (optional)</label>
-                        <input type="text" id="prerequisite" name="prerequisite" class="form-control" placeholder="e.g. CSE100">
-                    </div>
-                    <div class="form-group">
                         <label class="form-label" for="professor">Assign Professor</label>
                         <select id="professor" name="professorId" class="form-control" required>
                             <option value="">-- Select Professor --</option>
@@ -265,8 +261,8 @@ List<Professor> professors = (List<Professor>) request.getAttribute("professors"
                             <th>Course ID</th>
                             <th>Name</th>
                             <th>Start Time</th>
+                            <th>End Time</th>
                             <th>Size</th>
-                            <th>Prerequisite</th>
                             <th>Professor ID</th>
                         </tr>
                     </thead>
@@ -276,8 +272,8 @@ List<Professor> professors = (List<Professor>) request.getAttribute("professors"
                                 <td><%= c.getId() %></td>
                                 <td><%= c.getName() %></td>
                                 <td><%= c.getStartTime() %></td>
+                                <td><%= c.getEndTime() %></td>
                                 <td><%= c.getSize() %></td>
-                                <td><%= c.getPrerequisite() != null ? c.getPrerequisite() : "None" %></td>
                                 <td><%= c.getProfessorId() %></td>
                             </tr>
                         <% } %>

@@ -172,8 +172,8 @@ String professorName = (String) session.getAttribute("professor_name");
                             <th>Course ID</th>
                             <th>Name</th>
                             <th>Start Time</th>
+                            <th>End Time</th>
                             <th>Size</th>
-                            <th>Prerequisite</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -184,7 +184,7 @@ String professorName = (String) session.getAttribute("professor_name");
                                 <td><%= c.getName() %></td>
                                 <td><%= c.getStartTime() %></td>
                                 <td><%= c.getSize() %></td>
-                                <td><%= c.getPrerequisite() != null ? c.getPrerequisite() : "None" %></td>
+                                <td><%= c.getEndTime() %></td>
                                 <td>
                                     <form action="<%= request.getContextPath() %>/professor/course" method="get">
                                         <input type="hidden" name="courseId" value="<%= c.getId() %>" />

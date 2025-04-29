@@ -25,7 +25,7 @@ public class StudentLoginServlet extends HttpServlet {
 
         try {
             Connection conn = DBConnection.getConnection();
-            String sql = "SELECT * FROM student WHERE name = ? AND password = ?";
+            String sql = "SELECT * FROM student WHERE username = ? AND password = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password); 
@@ -40,9 +40,8 @@ public class StudentLoginServlet extends HttpServlet {
                 session.setAttribute("student_name", rs.getString("name"));  // store name
                 session.setAttribute("student_year", rs.getInt("year"));     // store year
                 session.setAttribute("student_gpa", rs.getDouble("gpa"));    // store GPA
-                
                 res.sendRedirect(req.getContextPath() + "/student/dashboard"); 
-            } else {
+            } else {    
                 res.setContentType("text/html");
                 PrintWriter out = res.getWriter();
                 out.println("<h3 style='color:red;'>Invalid username or password</h3>");

@@ -5,11 +5,10 @@ public class Course {
     private int size;
     private String startTime;
     private String name;
-    private String prerequisite;
     private int professorId;
     private String grade;
     private String professorName;
-
+    private String endTime;
     // Getters and Setters
     public String getGrade() {
         return grade;
@@ -51,14 +50,6 @@ public class Course {
         this.name = name;
     }
 
-    public String getPrerequisite() {
-        return prerequisite;
-    }
-
-    public void setPrerequisite(String prerequisite) {
-        this.prerequisite = prerequisite;
-    }
-
     public int getProfessorId() {
         return professorId;
     }
@@ -74,4 +65,12 @@ public class Course {
     public void setProfessorName(String professorName) {
         this.professorName = professorName;
     }   
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 }

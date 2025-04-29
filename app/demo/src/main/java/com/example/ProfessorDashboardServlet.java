@@ -43,8 +43,8 @@ public class ProfessorDashboardServlet extends HttpServlet {
                 c.setId(rs.getString("id"));
                 c.setSize(rs.getInt("size"));
                 c.setStartTime(rs.getString("start_time"));
+                c.setEndTime(rs.getString("end_time"));
                 c.setName(rs.getString("name"));
-                c.setPrerequisite(rs.getString("prerequisite"));
                 c.setProfessorId(rs.getInt("professor_id"));
                 courses.add(c);
             }

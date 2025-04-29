@@ -24,7 +24,7 @@ public class ProfessorLoginServlet extends HttpServlet {
 
         try {
             Connection conn = DBConnection.getConnection();
-            String sql = "SELECT * FROM professor WHERE name = ? AND password = ?";
+            String sql = "SELECT * FROM professor WHERE username = ? AND password = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password); 

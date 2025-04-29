@@ -12,7 +12,7 @@ public class DBConnection {
 
         try (InputStream input = DBConnection.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (input == null) {
-                throw new RuntimeException("🔴 Could not find db.properties");
+                throw new RuntimeException("Could not find db.properties");
             }
 
             props.load(input);
@@ -27,18 +27,17 @@ public class DBConnection {
 
             return DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {
-            throw new RuntimeException("❌ Failed to read DB config", e);
+            throw new RuntimeException("Failed to read DB config", e);
         }
     }
 
-    // ✅ Add a main method to test connection
     public static void main(String[] args) {
         try {
             Connection conn = getConnection();
             System.out.println("Connected to database successfully!");
             conn.close();
         } catch (SQLException e) {
-            System.out.println("❌ Database connection failed.");
+            System.out.println("Database connection failed.");
             e.printStackTrace();
         }
     }

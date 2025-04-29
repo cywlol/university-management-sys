@@ -4,6 +4,7 @@ public class Professor {
     private int id;
     private String name;
     private String email;
+    private String username;
 
     // Getters and Setters
     public int getId() {

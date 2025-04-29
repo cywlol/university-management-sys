@@ -31,7 +31,7 @@ public class StudentDashboardServlet extends HttpServlet {
 
             // Select all the courses that the student is enrolled in
             Connection conn = DBConnection.getConnection();
-            String sql = "SELECT c.id, c.size, c.start_time, c.name, c.prerequisite, c.professor_id, e.grade, p.name AS professor_name " +
+            String sql = "SELECT c.id, c.size, c.start_time, c.end_time,c.name, c.professor_id, e.grade, p.name AS professor_name " +
              "FROM course c " +
              "JOIN enrollment e ON c.id = e.course_id " +
              "JOIN professor p ON c.professor_id = p.id " +
@@ -47,8 +47,8 @@ public class StudentDashboardServlet extends HttpServlet {
                 c.setId(rs.getString("id"));
                 c.setSize(rs.getInt("size"));
                 c.setStartTime(rs.getString("start_time"));
+                c.setEndTime(rs.getString("end_time"));
                 c.setName(rs.getString("name"));
-                c.setPrerequisite(rs.getString("prerequisite"));
                 c.setProfessorId(rs.getInt("professor_id"));
                 c.setGrade(rs.getString("grade")); 
                 c.setProfessorName(rs.getString("professor_name")); // ← add this line
@@ -71,8 +71,8 @@ public class StudentDashboardServlet extends HttpServlet {
                     c.setId(rs2.getString("id"));
                     c.setSize(rs2.getInt("size"));
                     c.setStartTime(rs2.getString("start_time"));
+                    c.setEndTime(rs2.getString("end_time"));
                     c.setName(rs2.getString("name"));
-                    c.setPrerequisite(rs2.getString("prerequisite"));
                     c.setProfessorId(rs2.getInt("professor_id"));
                     allCourses.add(c);
                 }

@@ -53,8 +53,8 @@ public class AdminDashboardServlet extends HttpServlet {
                 c.setName(rsCourses.getString("name"));
                 c.setStartTime(rsCourses.getString("start_time"));
                 c.setSize(rsCourses.getInt("size"));
-                c.setPrerequisite(rsCourses.getString("prerequisite"));
                 c.setProfessorId(rsCourses.getInt("professor_id"));
+                c.setEndTime(rsCourses.getString("end_time"));
                 courses.add(c);
             }
 

@@ -191,8 +191,8 @@ String studentName = (String) session.getAttribute("student_name");
                             <th>Course ID</th>
                             <th>Name</th>
                             <th>Start Time</th>
+                            <th>End Time</th>
                             <th>Size</th>
-                            <th>Prerequisite</th>
                             <th>Professor</th>
                             <th>Grade</th>
                             <th>Action</th>
@@ -204,8 +204,8 @@ String studentName = (String) session.getAttribute("student_name");
                                 <td><%= c.getId() %></td>
                                 <td><%= c.getName() %></td>
                                 <td><%= c.getStartTime() %></td>
+                                <td><%= c.getEndTime() %></td>
                                 <td><%= c.getSize() %></td>
-                                <td><%= c.getPrerequisite() %></td>
                                 <td><%= c.getProfessorName() %></td>
                                 <td>
                                     <span class="status-pill <%= c.getGrade() != null ? "status-graded" : "status-in-progress" %>">

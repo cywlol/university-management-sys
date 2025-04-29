@@ -1,2 +1,2 @@
-INSERT INTO admin (username, password)
-VALUES ('admin', 'securepassword');
+ALTER TABLE course
+ADD end_time VARCHAR(10);

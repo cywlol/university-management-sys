@@ -52,12 +52,8 @@ public class StudentEnrollmentServlet extends HttpServlet {
                 c.setId(rs2.getString("id"));
                 c.setSize(rs2.getInt("size"));
                 c.setStartTime(rs2.getString("start_time"));
+                c.setEndTime(rs2.getString("end_time"));
                 c.setName(rs2.getString("name"));
-                if (rs2.getString("prerequisite") == null) {
-                    c.setPrerequisite("None");
-                } else {
-                    c.setPrerequisite(rs2.getString("prerequisite"));
-                }
                 c.setProfessorId(rs2.getInt("professor_id"));
             }
             
