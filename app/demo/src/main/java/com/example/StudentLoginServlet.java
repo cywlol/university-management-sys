@@ -11,9 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
-@WebServlet("/student/login")  // ← this connects /login to this class!
+@WebServlet("/student/login") 
 public class StudentLoginServlet extends HttpServlet {
 
     @Override
@@ -24,22 +23,31 @@ public class StudentLoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         try {
+            // Query database for student
             Connection conn = DBConnection.getConnection();
             String sql = "SELECT * FROM student WHERE username = ? AND password = ?";
+            String hashedPassword = null;
+            try {
+                hashedPassword = PasswordHash.hash(password);
+            } catch (Exception e) {
+                e.printStackTrace(); // optional: log it
+                res.getWriter().println("Error hashing password");
+                return;
+            }
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
-            stmt.setString(2, password); 
+            stmt.setString(2, hashedPassword); 
             ResultSet rs = stmt.executeQuery();
 
             
 
             if (rs.next()) {
-                // ✅ Redirect to dashboard if login is successful
-                HttpSession session = req.getSession(); // Create new session
-                session.setAttribute("student_id", rs.getInt("id")); // store id
-                session.setAttribute("student_name", rs.getString("name"));  // store name
-                session.setAttribute("student_year", rs.getInt("year"));     // store year
-                session.setAttribute("student_gpa", rs.getDouble("gpa"));    // store GPA
+                // Set attributes in session
+                HttpSession session = req.getSession(); 
+                session.setAttribute("student_id", rs.getInt("id"));
+                session.setAttribute("student_name", rs.getString("name")); 
+                session.setAttribute("student_year", rs.getInt("year"));   
+                session.setAttribute("student_gpa", rs.getDouble("gpa")); 
                 res.sendRedirect(req.getContextPath() + "/student/dashboard"); 
             } else {    
                 res.setContentType("text/html");

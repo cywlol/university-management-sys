@@ -7,9 +7,6 @@ import jakarta.servlet.ServletException;
 import java.io.IOException;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/admin/login") 
@@ -22,29 +19,16 @@ public class AdminLoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        try {
-            Connection conn = DBConnection.getConnection();
-            String sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            stmt.setString(2, password); 
-            ResultSet rs = stmt.executeQuery();
+        // Check if admin username and password are correct (hardcoded for simplicity)
 
-            if (rs.next()) {
-                HttpSession session = req.getSession(); // Create new session
-                session.setAttribute("admin_id", rs.getInt("id")); // store id
-                res.sendRedirect(req.getContextPath() + "/admin/dashboard"); 
-            } else {
-                res.setContentType("text/html");
-                PrintWriter out = res.getWriter();
-                out.println("<h3 style='color:red;'>Invalid username or password</h3>");
-            }
-
-        } catch (Exception e) {
+        if ("admin".equals(username) && "securepassword".equals(password)) {
+            HttpSession session = req.getSession();
+            session.setAttribute("admin_id", 1); // Assign a static admin ID
+            res.sendRedirect(req.getContextPath() + "/admin/dashboard");
+        } else {
             res.setContentType("text/html");
-            res.getWriter().println("<h2> Error is this: " + e.getMessage() + "</h2>");
-            e.printStackTrace();
+            PrintWriter out = res.getWriter();
+            out.println("<h3 style='color:red;'>Invalid username or password</h3>");
         }
     }
-
 }

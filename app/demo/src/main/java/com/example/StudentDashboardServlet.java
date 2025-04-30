@@ -19,7 +19,7 @@ public class StudentDashboardServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = req.getSession(false);
-
+        // Get student ID from session
         if (session == null || session.getAttribute("student_id") == null) {
             res.sendRedirect("../login.html");
             return;
@@ -40,7 +40,7 @@ public class StudentDashboardServlet extends HttpServlet {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, studentId);
             ResultSet rs = stmt.executeQuery();
-
+            // Create a list of courses
             List<Course> courses = new ArrayList<>();
             while (rs.next()) {
                 Course c = new Course();
@@ -51,11 +51,10 @@ public class StudentDashboardServlet extends HttpServlet {
                 c.setName(rs.getString("name"));
                 c.setProfessorId(rs.getInt("professor_id"));
                 c.setGrade(rs.getString("grade")); 
-                c.setProfessorName(rs.getString("professor_name")); // ← add this line
+                c.setProfessorName(rs.getString("professor_name"));
                 courses.add(c);
             }
 
-            System.out.println("Courses" + courses);
             
             session.setAttribute("studentCourses", courses);
 

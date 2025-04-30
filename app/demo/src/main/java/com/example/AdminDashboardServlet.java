@@ -18,10 +18,15 @@ public class AdminDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
+        // Get admin ID from session
         HttpSession session = req.getSession(false);
         if (session == null || session.getAttribute("admin_id") == null) {
             res.sendRedirect("../login.html");
             return;
+        }
+
+        if (session.getAttribute("error") != null) {
+            req.setAttribute("error", session.getAttribute("error"));
         }
 
         try {
@@ -42,9 +47,13 @@ public class AdminDashboardServlet extends HttpServlet {
             }
 
             // Get all courses
-            String sqlCourses = "SELECT * FROM course";
+            String sqlCourses = "SELECT c.id, c.name, c.start_time, c.end_time, c.size, p.name AS professor_name, c.professor_id " +
+             "FROM course c " +
+             "JOIN professor p ON c.professor_id = p.id";
             PreparedStatement stmtCourses = conn.prepareStatement(sqlCourses);
             ResultSet rsCourses = stmtCourses.executeQuery();
+
+            // Create a list of courses
 
             ArrayList<Course> courses = new ArrayList<>();
             while (rsCourses.next()) {
@@ -54,9 +63,12 @@ public class AdminDashboardServlet extends HttpServlet {
                 c.setStartTime(rsCourses.getString("start_time"));
                 c.setSize(rsCourses.getInt("size"));
                 c.setProfessorId(rsCourses.getInt("professor_id"));
+                c.setProfessorName(rsCourses.getString("professor_name"));
                 c.setEndTime(rsCourses.getString("end_time"));
                 courses.add(c);
             }
+
+            // Set attributes in request
 
             req.setAttribute("professors", professors);
             req.setAttribute("courses", courses);

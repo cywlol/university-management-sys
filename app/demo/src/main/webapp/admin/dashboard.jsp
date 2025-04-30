@@ -210,6 +210,12 @@ List<Professor> professors = (List<Professor>) request.getAttribute("professors"
     <div class="container">
         <div class="card">
             <h2 class="section-title">Add New Course</h2>
+            <% String error = (String) request.getAttribute("error");
+            if (error != null) { %>
+                <div style="color: red; margin-bottom: 1rem; font-weight: bold;">
+                    <%= error %>
+                </div>
+            <% } %>
             <form action="<%= request.getContextPath() %>/admin/addCourse" method="post">
                 <div class="form-grid">
                     <div class="form-group">
@@ -222,7 +228,11 @@ List<Professor> professors = (List<Professor>) request.getAttribute("professors"
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="startTime">Start Time</label>
-                        <input type="text" id="startTime" name="startTime" class="form-control" placeholder="e.g. 09:00:00" required>
+                        <input type="text" id="startTime" name="startTime" class="form-control" placeholder="e.g. 9:00 PM" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="endTime">End Time</label>
+                        <input type="text" id="endTime" name="endTime" class="form-control" placeholder="e.g. 10:00 AM" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="size">Class Size</label>
@@ -263,7 +273,7 @@ List<Professor> professors = (List<Professor>) request.getAttribute("professors"
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Size</th>
-                            <th>Professor ID</th>
+                            <th>Professor Name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -274,7 +284,7 @@ List<Professor> professors = (List<Professor>) request.getAttribute("professors"
                                 <td><%= c.getStartTime() %></td>
                                 <td><%= c.getEndTime() %></td>
                                 <td><%= c.getSize() %></td>
-                                <td><%= c.getProfessorId() %></td>
+                                <td><%= c.getProfessorName() %></td>
                             </tr>
                         <% } %>
                     </tbody>

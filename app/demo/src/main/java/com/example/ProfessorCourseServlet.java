@@ -18,13 +18,18 @@ public class ProfessorCourseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
+        // Get professor ID from session
         HttpSession session = req.getSession(false);
         if (session == null || session.getAttribute("professor_id") == null) {
             res.sendRedirect("../login.html");
             return;
         }
 
+        // Get course ID from request
+
         String courseId = req.getParameter("courseId");
+
+        // Query database for students and their grades
 
         try {
             Connection conn = DBConnection.getConnection();
@@ -37,6 +42,8 @@ public class ProfessorCourseServlet extends HttpServlet {
             stmt.setString(1, courseId);
             ResultSet rs = stmt.executeQuery();
 
+            // Create a list of students and their grades
+
             ArrayList<StudentGrade> students = new ArrayList<>();
             while (rs.next()) {
                 StudentGrade sg = new StudentGrade();
@@ -46,6 +53,7 @@ public class ProfessorCourseServlet extends HttpServlet {
                 sg.setCourseId(courseId);
                 students.add(sg);
             }
+            // Set attributes in request
 
             req.setAttribute("students", students);
             req.setAttribute("courseId", courseId);

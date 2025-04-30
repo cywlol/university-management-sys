@@ -27,7 +27,7 @@ public class StudentUnenrollmentServlet extends HttpServlet {
 
         try {
             Connection conn = DBConnection.getConnection();
-
+            // Query database to delete enrollment
             String sql = "DELETE FROM enrollment WHERE student_id = ? AND course_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, studentId);
@@ -36,7 +36,7 @@ public class StudentUnenrollmentServlet extends HttpServlet {
             stmt.executeUpdate();
             conn.close();
             
-
+            // Update studentCourses in session
             Object obj = session.getAttribute("studentCourses");
             ArrayList<Course> currentCourses;
 

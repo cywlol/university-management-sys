@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/professor/login")  // ← this connects /login to this class!
+@WebServlet("/professor/login")  
 public class ProfessorLoginServlet extends HttpServlet {
 
     @Override
@@ -22,21 +22,35 @@ public class ProfessorLoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
+        // Hash password
+        String hashedPassword = null;
         try {
+            hashedPassword = PasswordHash.hash(password);
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            res.getWriter().println("Error hashing password");
+            return;
+        }
+
+
+        try {
+            // Query database for professor
             Connection conn = DBConnection.getConnection();
             String sql = "SELECT * FROM professor WHERE username = ? AND password = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
-            stmt.setString(2, password); 
+            stmt.setString(2, hashedPassword); 
             ResultSet rs = stmt.executeQuery();
-
+            
             if (rs.next()) {
-                HttpSession session = req.getSession(); // Create new session
-                session.setAttribute("professor_id", rs.getInt("id")); // store id
-                session.setAttribute("professor_name", rs.getString("name"));  // store name
-                session.setAttribute("professor_email", rs.getString("email"));     // store year
+                HttpSession session = req.getSession(); 
+                // Set attributes in session
+                session.setAttribute("professor_id", rs.getInt("id")); 
+                session.setAttribute("professor_name", rs.getString("name")); 
+                session.setAttribute("professor_email", rs.getString("email"));    
                 res.sendRedirect(req.getContextPath() + "/professor/dashboard"); 
             } else {
+                // If professor not found, redirect to login page
                 res.setContentType("text/html");
                 PrintWriter out = res.getWriter();
                 out.println("<h3 style='color:red;'>Invalid username or password</h3>");

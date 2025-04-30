@@ -9,7 +9,6 @@ public class Course {
     private String grade;
     private String professorName;
     private String endTime;
-    // Getters and Setters
     public String getGrade() {
         return grade;
     }

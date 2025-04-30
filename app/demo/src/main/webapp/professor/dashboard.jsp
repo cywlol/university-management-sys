@@ -150,6 +150,21 @@ String professorName = (String) session.getAttribute("professor_name");
     <header>
         <div class="container">
             <h1>Welcome, <%= professorName %>!</h1>
+            <%
+                String error = (String) session.getAttribute("error");
+                String success = (String) session.getAttribute("success");
+                if (error != null) {
+            %>
+                <div style="color: red; font-weight: bold; margin-top: 10px;"><%= error %></div>
+            <%
+                    session.removeAttribute("error");
+                } else if (success != null) {
+            %>
+                <div style="color: green; font-weight: bold; margin-top: 10px;"><%= success %></div>
+            <%
+                    session.removeAttribute("success");
+                }
+            %>
             <form action="<%= request.getContextPath() %>/logout" method="post" class="logout-button">
                 <button type="submit" class="btn btn-danger">Logout</button>
             </form>

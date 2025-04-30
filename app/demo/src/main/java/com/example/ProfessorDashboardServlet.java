@@ -18,6 +18,7 @@ public class ProfessorDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
+        // Get professor ID from session
         HttpSession session = req.getSession(false);
 
         if (session == null || session.getAttribute("professor_id") == null) {
@@ -26,7 +27,6 @@ public class ProfessorDashboardServlet extends HttpServlet {
         }
 
         int professor = (int) session.getAttribute("professor_id");
-
         try {
 
             // Select all the courses that the student is enrolled in
@@ -37,6 +37,7 @@ public class ProfessorDashboardServlet extends HttpServlet {
             stmt.setInt(1, professor);
             ResultSet rs = stmt.executeQuery();
 
+            // Create a list of courses
             List<Course> courses = new ArrayList<>();
             while (rs.next()) {
                 Course c = new Course();
@@ -49,11 +50,8 @@ public class ProfessorDashboardServlet extends HttpServlet {
                 courses.add(c);
             }
 
-            System.out.println("Courses" + courses);
-            
+            // Set attributes in request
             session.setAttribute("studentCourses", courses);
-
-            
             session.setAttribute("professorCourses", courses);
             req.getRequestDispatcher("/professor/dashboard.jsp").forward(req, res);
             conn.close();

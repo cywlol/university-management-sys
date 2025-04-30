@@ -19,9 +19,9 @@ import jakarta.servlet.http.HttpSession;
 public class StudentEnrollmentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-
+            
         HttpSession session = req.getSession(false);
-
+        // Get student ID from session
         if (session == null || session.getAttribute("student_id") == null) {
             res.sendRedirect("../login.html");
             return;
@@ -32,21 +32,22 @@ public class StudentEnrollmentServlet extends HttpServlet {
          try {
             Connection conn = DBConnection.getConnection();
 
-        
-            String sql = "INSERT INTO enrollment (course_id, student_id, completed, name, grade) VALUES (?, ?, ?, ?, ?)";
+            // Query database to insert enrollment
+            String sql = "INSERT INTO enrollment (course_id, student_id, grade) VALUES (?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, courseID);
             stmt.setInt(2, Integer.parseInt(session.getAttribute("student_id").toString()));
-            stmt.setBoolean(3, false);
-            stmt.setString(4, session.getAttribute("student_name").toString());
-            stmt.setString(5, "In Progress");
+            stmt.setString(3, "In Progress");
             int rowsInserted = stmt.executeUpdate();
 
+            // Query database to get course
             String sql2 = "SELECT * FROM course WHERE id = ?";
             PreparedStatement stmt2 = conn.prepareStatement(sql2);
             stmt2.setString(1, courseID);
             ResultSet rs2 = stmt2.executeQuery();
+
+            // Create a course object
             Course c = new Course();
             if (rs2.next()) {
                 c.setId(rs2.getString("id"));
@@ -57,8 +58,7 @@ public class StudentEnrollmentServlet extends HttpServlet {
                 c.setProfessorId(rs2.getInt("professor_id"));
             }
             
-
-
+            // If enrollment inserted successfully, update studentCourses in session
             if (rowsInserted > 0) {
                 Object obj = session.getAttribute("studentCourses");
         
