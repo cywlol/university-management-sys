@@ -3,6 +3,7 @@
 <%
 List<Course> courses = (List<Course>) session.getAttribute("studentCourses");
 List<Course> allCourses = (List<Course>) session.getAttribute("allCourses");
+List<Course> coursesQuery = (List<Course>) request.getAttribute("courseSearch");
 String studentName = (String) session.getAttribute("student_name");
 %>
 
@@ -168,6 +169,14 @@ String studentName = (String) session.getAttribute("student_name");
         .status-graded {
             background-color: #FF9800;
         }
+
+        .search {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            min-width: 300px;
+        }
     </style>
 </head>
 <body>
@@ -245,7 +254,51 @@ String studentName = (String) session.getAttribute("student_name");
                 </form>
             <% } else { %>
                 <div class="empty-state">
-                    <p>No courses available for enrollment at this time.</p>
+                    <p>No courses to display. Use the search function above to search for a course.</p>
+                </div>
+            <% } %>
+        </div>
+         <div class="card">
+            <h2 class="section-title">Search for a Course</h2>
+            <form action="<%= request.getContextPath() %>/student/search" method="post" class="search-form">
+                <input type="text" class="search" name="courseName" placeholder="Enter course name" required>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <h2 class="section-title">
+                Courses
+                <% if (coursesQuery != null) { %>
+                    <span class="badge"><%="[" + coursesQuery.size() + "]" %></span>
+                <% } %>
+            </h2>
+            
+            <% if (coursesQuery != null && !coursesQuery.isEmpty()) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Course ID</th>
+                            <th>Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Size</th>
+                            <th>Professor Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (Course c : coursesQuery) { %>
+                            <tr>
+                                <td><%= c.getId() %></td>
+                                <td><%= c.getName() %></td>
+                                <td><%= c.getStartTime() %></td>
+                                <td><%= c.getEndTime() %></td>
+                                <td><%= c.getSize() %></td>
+                                <td><%= c.getProfessorName() %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <div class="empty-state">
+                    <p>No courses available. Add a new course using the form above.</p>
                 </div>
             <% } %>
         </div>

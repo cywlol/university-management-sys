@@ -79,6 +79,7 @@ public class StudentDashboardServlet extends HttpServlet {
             session.setAttribute("allCourses", allCourses);  
             req.getRequestDispatcher("/student/dashboard.jsp").forward(req, res);
             conn.close();
+
         } catch (Exception e) {
             e.printStackTrace();
             res.getWriter().println("Error: " + e.getMessage());
