@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -58,11 +59,26 @@
         color: #4caf50;
         font-size: 14px;
       }
+      .error-message {
+        color: red;
+        text-align: center;
+        margin-bottom: 15px;
+      }
     </style>
   </head>
   <body>
-    <form action="/management/admin/login" method="post">
+    <form action="<%=request.getContextPath()%>/admin/login" method="post">
       <h2>Admin Login</h2>
+      
+      <% 
+        // Display error message if present
+        String errorMessage = (String) request.getAttribute("errorMessage");
+        if (errorMessage != null && !errorMessage.isEmpty()) {
+      %>
+        <div class="error-message">
+          <%= errorMessage %>
+        </div>
+      <% } %>
 
       <label for="username">Username</label>
       <input id="username" name="username" type="text" required />

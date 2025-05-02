@@ -1,8 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Login</title>
+    <title>Student Login</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -58,33 +59,35 @@
         color: #4caf50;
         font-size: 14px;
       }
+      .error-message {
+        color: red;
+        text-align: center;
+        margin-bottom: 15px;
+      }
     </style>
   </head>
   <body>
-    <form action="/management/student/login" method="post">
-      <h2>Student Login Page</h2>
+    <form action="<%=request.getContextPath()%>/student/login" method="post">
+      <h2>Student Login</h2>
+      
+      <% 
+        // Display error message if present
+        String errorMessage = (String) request.getAttribute("errorMessage");
+        if (errorMessage != null && !errorMessage.isEmpty()) {
+      %>
+        <div class="error-message">
+          <%= errorMessage %>
+        </div>
+      <% } %>
 
       <label for="username">Username</label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        placeholder="Enter your username"
-        required
-      />
+      <input id="username" name="username" type="text" required />
 
       <label for="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        placeholder="Enter your password"
-        required
-      />
+      <input id="password" name="password" type="password" required />
 
       <button type="submit">Login</button>
-
-      <div class="link">
+       <div class="link">
         Don't have an account? <a href="register.html">Register here</a>
       </div>
     </form>

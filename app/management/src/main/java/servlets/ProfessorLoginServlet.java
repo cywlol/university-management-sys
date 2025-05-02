@@ -18,6 +18,13 @@ import jakarta.servlet.http.HttpSession;
 public class ProfessorLoginServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        // Forward to the login page
+        req.getRequestDispatcher("/professor/login.jsp").forward(req, res);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
@@ -55,9 +62,8 @@ public class ProfessorLoginServlet extends HttpServlet {
                 res.sendRedirect(req.getContextPath() + "/professor/dashboard"); 
             } else {
                 // If professor not found, redirect to login page
-                res.setContentType("text/html");
-                PrintWriter out = res.getWriter();
-                out.println("<h3 style='color:red;'>Invalid username or password</h3>");
+                req.setAttribute("errorMessage", "Invalid username or password");
+                req.getRequestDispatcher("/professor/login.jsp").forward(req, res);
             }
 
         } catch (Exception e) {

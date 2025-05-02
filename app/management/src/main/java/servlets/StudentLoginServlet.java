@@ -17,6 +17,13 @@ import java.sql.ResultSet;
 public class StudentLoginServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        // Forward to the login page
+        req.getRequestDispatcher("/student/login.jsp").forward(req, res);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
@@ -55,10 +62,11 @@ public class StudentLoginServlet extends HttpServlet {
                 session.setAttribute("student_gpa", rs.getDouble("gpa")); 
                 res.sendRedirect(req.getContextPath() + "/student/dashboard"); 
             } else {    
-                // If student not found, redirect to login page
-                res.setContentType("text/html");
-                PrintWriter out = res.getWriter();
-                out.println("<h3 style='color:red;'>Invalid username or password</h3>");
+                // Set error message as request attribute
+                req.setAttribute("errorMessage", "Invalid username or password");
+                
+                // Forward back to the login page with error message
+                req.getRequestDispatcher("/student/login.jsp").forward(req, res);
             }
 
         } catch (Exception e) {
