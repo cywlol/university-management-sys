@@ -236,7 +236,7 @@ List<Professor> professors = (List<Professor>) request.getAttribute("professors"
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="size">Class Size</label>
-                        <input type="number" id="size" name="size" class="form-control" placeholder="e.g. 30" required>
+                        <input type="number" id="size" name="size" class="form-control" placeholder="e.g. 30" min="1" max="2000" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="professor">Assign Professor</label>

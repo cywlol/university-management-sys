@@ -21,6 +21,7 @@ public class AdminAddCourseServlet extends HttpServlet {
 
         // Get the course details from the request
         String id = req.getParameter("id");
+        int size = Integer.parseInt(req.getParameter("size"));
         String name = req.getParameter("name");
         String startTime = req.getParameter("startTime");
         String endTime = req.getParameter("endTime");
@@ -32,25 +33,13 @@ public class AdminAddCourseServlet extends HttpServlet {
             session.setAttribute("error", "Start and end time must be in format like '9:00 AM' or '2:15 PM'.");
             res.sendRedirect(req.getContextPath() + "/admin/dashboard");
             return;
-        } else if (name.length() > 10) {
-            session.setAttribute("error", "Course name cannot be longer than 10 characters.");
+        } else if (id.length() > 10) {
+            session.setAttribute("error", "Course ID cannot be longer than 10 characters.");
             res.sendRedirect(req.getContextPath() + "/admin/dashboard");
             return;
         }
 
-        int size;
-        try {
-            size = Integer.parseInt(req.getParameter("size"));
-            if (size <= 0) {
-                session.setAttribute("error", "Class size must be a positive integer.");
-                res.sendRedirect(req.getContextPath() + "/admin/dashboard");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            session.setAttribute("error", "Class size must be a valid integer.");
-            res.sendRedirect(req.getContextPath() + "/admin/dashboard");
-            return;
-        }
+        
 
 
         try {
