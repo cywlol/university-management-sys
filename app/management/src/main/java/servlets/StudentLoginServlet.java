@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
 import jakarta.servlet.annotation.WebServlet;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import jakarta.servlet.http.HttpSession;
