@@ -12,9 +12,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+
 // This is an endpoint for the professor to register
 @WebServlet("/professor/register") 
 public class ProfessorRegisterServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        // Forward to the login page
+        req.getRequestDispatcher("/professor/register.jsp").forward(req, res);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -24,7 +32,6 @@ public class ProfessorRegisterServlet extends HttpServlet {
         String username = req.getParameter("username");
         String name = req.getParameter("name");
         String password = req.getParameter("password");
-        String email = req.getParameter("email");
         String hashedPassword = null;
 
         // Hash password
@@ -39,13 +46,26 @@ public class ProfessorRegisterServlet extends HttpServlet {
         try {
             // Query database to insert professor
             Connection conn = DBConnection.getConnection();
+
+            // Check if username already exists
+            String sqlTestError = "SELECT id FROM professor WHERE username = ?";
+            PreparedStatement stmtTest = conn.prepareStatement(sqlTestError);
+            stmtTest.setString(1, username);
+            ResultSet rsTest = stmtTest.executeQuery();
+            if (rsTest.next()) {
+                conn.close();
+                req.setAttribute("errorMessage", "Username already exists");
+                req.getRequestDispatcher("/professor/register.jsp").forward(req, res);
+                return;
+            }
+
+
             System.out.println("Connected to database successfully!");
-            String sql = "INSERT INTO professor (username, password, email, name) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO professor (username, password, name) VALUES (?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, hashedPassword);
-            stmt.setString(3, email);
-            stmt.setString(4, name);
+            stmt.setString(3, name);
 
             int rowsInserted = stmt.executeUpdate();
 
@@ -66,7 +86,6 @@ public class ProfessorRegisterServlet extends HttpServlet {
                 HttpSession session = req.getSession();
                 session.setAttribute("professor_id", profID); 
                 session.setAttribute("professor_name", name);  
-                session.setAttribute("professor_email", email);    
                 res.sendRedirect(req.getContextPath() + "/professor/dashboard"); 
             } else {
                 // If professor not inserted, redirect to register page with error message

@@ -1,39 +1,38 @@
 USE management_sys;
 
-INSERT INTO professor (username, name, password) VALUES
-('jsmith', 'John Smith', 'pass123'),
-('adoe', 'Alice Doe', 'secure456'),
-('rlee', 'Robert Lee', 'qwerty789'),
-('mwilson', 'Mary Wilson', 'abc123'),
-('tjohnson', 'Tom Johnson', 'pass321'),
-('kpatel', 'Kiran Patel', 'hello123'),
-('nbrown', 'Nina Brown', 'letmein22'),
-('pscott', 'Paul Scott', 'login789'),
-('lthomas', 'Laura Thomas', 'mypassword'),
-('dgarcia', 'David Garcia', 'testpass'),
-('csimmons', 'Cathy Simmons', 'welcome456'),
-('hwang', 'Henry Wang', 'openup999'),
-('bkim', 'Betty Kim', 'profpass'),
-('jlopez', 'Jose Lopez', 'sunshine'),
-('rwilson', 'Rachel Wilson', 'teach123');
+INSERT INTO professor (id, username, name, password) VALUES
+(1, 'jsmith', 'John Smith', 'pass123'),
+(2, 'adoe', 'Alice Doe', 'secure456'),
+(3, 'rlee', 'Robert Lee', 'qwerty789'),
+(4, 'mwilson', 'Mary Wilson', 'abc123'),
+(5, 'tjohnson', 'Tom Johnson', 'pass321'),
+(6, 'kpatel', 'Kiran Patel', 'hello123'),
+(7, 'nbrown', 'Nina Brown', 'letmein22'),
+(8, 'pscott', 'Paul Scott', 'login789'),
+(9, 'lthomas', 'Laura Thomas', 'mypassword'),
+(10, 'dgarcia', 'David Garcia', 'testpass'),
+(11, 'csimmons', 'Cathy Simmons', 'welcome456'),
+(12, 'hwang', 'Henry Wang', 'openup999'),
+(13, 'bkim', 'Betty Kim', 'profpass'),
+(14, 'jlopez', 'Jose Lopez', 'sunshine'),
+(15, 'rwilson', 'Rachel Wilson', 'teach123');
 
-
-INSERT INTO student (username, name, password, year, gpa) VALUES
-('slee', 'Samuel Lee', 'pass001', 1, 3.2),
-('jchan', 'Jenny Chan', 'pass002', 2, 3.5),
-('knguyen', 'Kevin Nguyen', 'pass003', 3, 3.8),
-('mlara', 'Maria Lara', 'pass004', 1, 2.9),
-('dwhite', 'Daniel White', 'pass005', 4, 3.7),
-('ashah', 'Anita Shah', 'pass006', 2, 3.1),
-('bramos', 'Brian Ramos', 'pass007', 3, 3.0),
-('jgreen', 'Jill Green', 'pass008', 1, 3.3),
-('tmorris', 'Tom Morris', 'pass009', 2, 2.8),
-('llee', 'Linda Lee', 'pass010', 4, 3.9),
-('csmith', 'Chris Smith', 'pass011', 3, 3.6),
-('kali', 'Kiran Ali', 'pass012', 2, 3.4),
-('npatel', 'Nina Patel', 'pass013', 1, 3.0),
-('jwang', 'Jason Wang', 'pass014', 3, 2.7),
-('aroberts', 'Alice Roberts', 'pass015', 4, 3.85);
+INSERT INTO student (id, username, name, password, year, gpa) VALUES
+(1, 'slee', 'Samuel Lee', 'pass001', 1, 3.2),
+(2, 'jchan', 'Jenny Chan', 'pass002', 2, 3.5),
+(3, 'knguyen', 'Kevin Nguyen', 'pass003', 3, 3.8),
+(4, 'mlara', 'Maria Lara', 'pass004', 1, 2.9),
+(5, 'dwhite', 'Daniel White', 'pass005', 4, 3.7),
+(6, 'ashah', 'Anita Shah', 'pass006', 2, 3.1),
+(7, 'bramos', 'Brian Ramos', 'pass007', 3, 3.0),
+(8, 'jgreen', 'Jill Green', 'pass008', 1, 3.3),
+(9, 'tmorris', 'Tom Morris', 'pass009', 2, 2.8),
+(10, 'llee', 'Linda Lee', 'pass010', 4, 3.9),
+(11, 'csmith', 'Chris Smith', 'pass011', 3, 3.6),
+(12, 'kali', 'Kiran Ali', 'pass012', 2, 3.4),
+(13, 'npatel', 'Nina Patel', 'pass013', 1, 3.0),
+(14, 'jwang', 'Jason Wang', 'pass014', 3, 2.7),
+(15, 'aroberts', 'Alice Roberts', 'pass015', 4, 3.85);
 
 INSERT INTO course (id, name, start_time, end_time, size, professor_id) VALUES
 ('CSE101', 'Intro to Computer Science', '8:00 AM', '9:15 AM', 50, 1),

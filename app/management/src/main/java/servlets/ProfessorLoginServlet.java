@@ -58,7 +58,6 @@ public class ProfessorLoginServlet extends HttpServlet {
                 // Set attributes in session
                 session.setAttribute("professor_id", rs.getInt("id")); 
                 session.setAttribute("professor_name", rs.getString("name")); 
-                session.setAttribute("professor_email", rs.getString("email"));    
                 res.sendRedirect(req.getContextPath() + "/professor/dashboard"); 
             } else {
                 // If professor not found, redirect to login page

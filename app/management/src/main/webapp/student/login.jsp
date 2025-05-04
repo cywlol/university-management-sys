@@ -64,6 +64,22 @@
         text-align: center;
         margin-bottom: 15px;
       }
+
+      .back-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .back-btn:hover {
+        background-color: #5a6268;
+      }
     </style>
   </head>
   <body>
@@ -87,8 +103,9 @@
       <input id="password" name="password" type="password" required />
 
       <button type="submit">Login</button>
+      <button type="button" onclick="window.location.href='/management/home.jsp'" class="back-btn">Back</button>
        <div class="link">
-        Don't have an account? <a href="register.html">Register here</a>
+        Don't have an account? <a href="register.jsp">Register here</a>
       </div>
     </form>
   </body>

@@ -36,7 +36,7 @@ public class AdminDashboardServlet extends HttpServlet {
             Connection conn = DBConnection.getConnection();
 
             // Get all professors from professor table
-            String sqlProfessors = "SELECT id, name, email FROM professor";
+            String sqlProfessors = "SELECT id, name FROM professor";
             PreparedStatement stmtProfessors = conn.prepareStatement(sqlProfessors);
             ResultSet rsProfessors = stmtProfessors.executeQuery();
 
@@ -46,7 +46,6 @@ public class AdminDashboardServlet extends HttpServlet {
                 Professor p = new Professor();
                 p.setId(rsProfessors.getInt("id"));
                 p.setName(rsProfessors.getString("name"));
-                p.setEmail(rsProfessors.getString("email"));
                 professors.add(p);
             }
 

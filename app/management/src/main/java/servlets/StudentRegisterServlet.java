@@ -18,6 +18,14 @@ import java.sql.ResultSet;
 public class StudentRegisterServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        // Forward to the login page
+        req.getRequestDispatcher("/professor/register.jsp").forward(req, res);
+    }
+
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
@@ -41,6 +49,18 @@ public class StudentRegisterServlet extends HttpServlet {
         try {
             // Query database to insert student
             Connection conn = DBConnection.getConnection();
+
+            String sqlTestError = "SELECT id FROM student WHERE username = ?";
+            PreparedStatement stmtTest = conn.prepareStatement(sqlTestError);
+            stmtTest.setString(1, username);
+            ResultSet rsTest = stmtTest.executeQuery();
+            if (rsTest.next()) {
+                conn.close();
+                req.setAttribute("errorMessage", "Username already exists");
+                req.getRequestDispatcher("/student/register.jsp").forward(req, res);
+                return;
+            }
+
             String sql = "INSERT INTO student (username, password, year, gpa, name) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);

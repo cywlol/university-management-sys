@@ -1,8 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Register</title>
+    <title>Professor Register</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -61,63 +62,28 @@
     </style>
   </head>
   <body>
-    <form action="/management/student/register" method="post">
-      <h2>Student Register Page</h2>
+    <form action="<%=request.getContextPath()%>/professor/register" method="post">
+      <h2>Professor Register</h2>
+      
+      <% if (request.getAttribute("errorMessage") != null) { %>
+        <div style="color: red; text-align: center; margin-bottom: 15px;">
+          <%= request.getAttribute("errorMessage") %>
+        </div>
+      <% } %>
 
       <label for="username">Username</label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        placeholder="Enter your username"
-        required
-      />
+      <input id="username" name="username" type="text" required/>
 
       <label for="name">Name</label>
-      <input
-        id="name"
-        name="name"
-        type="text"
-        placeholder="Enter your name"
-        required
-      />
+      <input id="name" name="name" type="text" required/>
 
       <label for="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        placeholder="Enter your password"
-        required
-      />
-
-      <label for="year">Year</label>
-      <input
-        id="year"
-        name="year"
-        type="number"
-        placeholder="Year (e.g., 1, 2, 3, 4)"
-        min="1"
-        max="4"
-        required
-      />
-
-      <label for="gpa">GPA</label>
-      <input
-        id="gpa"
-        name="gpa"
-        type="number"
-        step="0.01"
-        min="0"
-        max="4.0"
-        placeholder="GPA (0.00 - 4.00)"
-        required
-      />
+      <input id="password" name="password" type="password" required />
 
       <button type="submit">Register</button>
 
       <div class="link">
-        Already have an account? <a href="login.html">Login here</a>
+        Already have an account? <a href="login.jsp">Login here</a>
       </div>
     </form>
   </body>
