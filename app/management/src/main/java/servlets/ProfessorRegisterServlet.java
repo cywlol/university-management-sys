@@ -34,6 +34,32 @@ public class ProfessorRegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
         String hashedPassword = null;
 
+        if (username.length() > 30) {
+            req.setAttribute("errorMessage", "Username should be less than 30 characters");
+            req.getRequestDispatcher("/professor/register.jsp").forward(req, res);
+            return;
+        }
+
+        if (name.length() > 30) {
+            req.setAttribute("errorMessage", "Name should be less than 30 characters");
+            req.getRequestDispatcher("/professor/register.jsp").forward(req, res);
+            return;
+        }
+
+        if (name.length() > 50) {
+            req.setAttribute("errorMessage", "Full name should be less than 50 characters");
+            req.getRequestDispatcher("/professor/register.jsp").forward(req, res);
+            return;
+        } 
+
+        if (!name.matches("^[A-Za-z]+\\s[A-Za-z]+$")) {
+            req.setAttribute("errorMessage", "Full name must contain only letters with a single space between first and last name");
+            req.getRequestDispatcher("/professor/register.jsp").forward(req, res);
+            return;
+        }
+
+
+
         // Hash password
         try {
             hashedPassword = PasswordHash.hash(password);

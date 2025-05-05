@@ -96,12 +96,12 @@
         required
       />
 
-      <label for="name">Name</label>
+      <label for="name">Full Name</label>
       <input
         id="name"
         name="name"
         type="text"
-        placeholder="Enter your name"
+        placeholder="Enter your name (eg. John Doe)"
         required
       />
 
