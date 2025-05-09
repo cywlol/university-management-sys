@@ -23,7 +23,7 @@ public class ProfessorUpdateGradesServlet extends HttpServlet {
         // Get professor ID from session, if not logged in, redirect to login page
         HttpSession session = req.getSession(false);
         if (session == null || session.getAttribute("professor_id") == null) {
-            res.sendRedirect("../login.html");
+            res.sendRedirect("../login.jsp");
             return;
         }
 

@@ -23,7 +23,7 @@ public class StudentDashboardServlet extends HttpServlet {
 
         // Get student ID from session, if not logged in, redirect to login page
         if (session == null || session.getAttribute("student_id") == null) {
-            res.sendRedirect("../login.html");
+            res.sendRedirect("../login.jsp");
             return;
         }
         

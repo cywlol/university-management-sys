@@ -23,7 +23,7 @@ public class ProfessorDashboardServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
 
         if (session == null || session.getAttribute("professor_id") == null) {
-            res.sendRedirect("../login.html");
+            res.sendRedirect("../login.jsp");
             return;
         }
 

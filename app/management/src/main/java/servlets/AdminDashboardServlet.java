@@ -23,7 +23,7 @@ public class AdminDashboardServlet extends HttpServlet {
         // Get admin ID from session (if not logged in, redirect to login page)
         HttpSession session = req.getSession(false);
         if (session == null || session.getAttribute("admin_id") == null) {
-            res.sendRedirect("../login.html");
+            res.sendRedirect("../login.jsp");
             return;
         }
 
